@@ -1,4 +1,4 @@
-use std::{collections::HashMap, io::Write, iter::once};
+use std::{collections::HashMap, io::Write as _, iter::once};
 
 use anyhow::{bail, Result};
 use async_recursion::async_recursion;
@@ -59,7 +59,7 @@ use turbopack_binding::{
 
 use crate::{
     app_render::next_server_component_transition::NextServerComponentTransition,
-    app_segment_config::parse_segment_config_from_source,
+    app_segment_config::{parse_segment_config_from_loader_tree, parse_segment_config_from_source},
     app_structure::{
         get_entrypoints, get_global_metadata, Components, Entrypoint, GlobalMetadataVc, LoaderTree,
         LoaderTreeVc, Metadata, MetadataItem, MetadataWithAltItem, OptionAppDirVc,
@@ -712,6 +712,8 @@ impl AppRendererVc {
             (context_ssr, intermediate_output_path)
         };
 
+        let config = parse_segment_config_from_loader_tree(loader_tree);
+
         struct State {
             inner_assets: IndexMap<String, AssetVc>,
             counter: usize,
@@ -1103,7 +1105,7 @@ impl AppRouteVc {
 
         let config = parse_segment_config_from_source(entry_asset);
         let module = match config.await?.runtime {
-            NextRuntime::NodeJs => {
+            Some(NextRuntime::NodeJs) => {
                 let bootstrap_asset = next_asset("entry/app/route.ts");
 
                 route_bootstrap(
@@ -1114,7 +1116,7 @@ impl AppRouteVc {
                     BootstrapConfigVc::empty(),
                 )
             }
-            NextRuntime::Edge => {
+            Some(NextRuntime::Edge) | None => {
                 let internal_asset = next_asset("entry/app/edge-route.ts");
 
                 let entry = this.context.with_transition("next-edge-route").process(
