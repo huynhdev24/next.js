@@ -98,14 +98,7 @@ const asyncStoragesRegex =
   /next[\\/]dist[\\/]client[\\/]components[\\/](static-generation-async-storage|action-async-storage|request-async-storage)/
 
 // exports.<conditionName>
-const edgeConditionNames = [
-  'edge-light',
-  'worker',
-  'browser',
-  'import',
-  'module',
-  'default',
-]
+const edgeConditionNames = ['edge-light', 'worker', 'browser', 'module']
 
 // packageJson.<mainField>
 const mainFieldsPerCompiler: Record<CompilerNameValues, string[]> = {
@@ -919,7 +912,7 @@ export default async function getBaseWebpackConfig(
 
   const reactServerCondition = [
     'react-server',
-    ...(isEdgeServer ? edgeConditionNames : ['import', 'module', 'default']),
+    ...(isEdgeServer ? edgeConditionNames : ['module']),
   ]
 
   const clientEntries = isClient
