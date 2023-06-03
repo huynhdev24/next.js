@@ -3,7 +3,8 @@ import ReactRefreshWebpackPlugin from 'next/dist/compiled/@next/react-refresh-ut
 import chalk from 'next/dist/compiled/chalk'
 import crypto from 'crypto'
 import { webpack } from 'next/dist/compiled/webpack/webpack'
-import path, { dirname } from 'path'
+import path from 'path'
+import semver from 'next/dist/compiled/semver'
 import { escapeStringRegexp } from '../shared/lib/escape-regexp'
 import {
   DOT_NEXT_ALIAS,
@@ -254,6 +255,12 @@ export function getDefineEnv({
     'process.env.NODE_ENV': JSON.stringify(dev ? 'development' : 'production'),
     'process.env.NEXT_RUNTIME': JSON.stringify(
       isEdgeServer ? 'edge' : isNodeServer ? 'nodejs' : undefined
+    ),
+    'process.env.__NEXT_ACTIONS_DEPLOYMENT_ID': JSON.stringify(
+      config.experimental.useDeploymentIdServerActions
+    ),
+    'process.env.__NEXT_DEPLOYMENT_ID': JSON.stringify(
+      config.experimental.deploymentId
     ),
     'process.env.__NEXT_FETCH_CACHE_KEY_PREFIX':
       JSON.stringify(fetchCacheKeyPrefix),
@@ -1034,8 +1041,18 @@ export default async function getBaseWebpackConfig(
 
   let hasExternalOtelApiPackage = false
   try {
-    require.resolve('@opentelemetry/api')
-    hasExternalOtelApiPackage = true
+    const opentelemetryPackageJson = require('@opentelemetry/api/package.json')
+    if (opentelemetryPackageJson.version) {
+      // 0.19.0 is the first version of the package that has the `tracer.getSpan` API that we need:
+      // https://github.com/vercel/next.js/issues/48118
+      if (semver.gte(opentelemetryPackageJson.version, '0.19.0')) {
+        hasExternalOtelApiPackage = true
+      } else {
+        throw new Error(
+          `Installed "@opentelemetry/api" with version ${opentelemetryPackageJson.version} is not supported by Next.js. Please upgrade to 0.19.0 or newer version.`
+        )
+      }
+    }
   } catch {}
 
   const resolveConfig: webpack.Configuration['resolve'] = {
@@ -1082,7 +1099,7 @@ export default async function getBaseWebpackConfig(
               'next/dist/esm/client/components/headers',
 
             // TODO: This is a temp fix, investigate the module not found for zod
-            zod: dirname(require.resolve('zod/package.json')),
+            zod: path.dirname(require.resolve('zod/package.json')),
           }
         : undefined),
 
@@ -2105,8 +2122,8 @@ export default async function getBaseWebpackConfig(
                   not: [new RegExp(WEBPACK_RESOURCE_QUERIES.metadata)],
                 },
                 options: {
-                  isServer: isNodeServer || isEdgeServer,
                   isDev: dev,
+                  compilerType,
                   basePath: config.basePath,
                   assetPrefix: config.assetPrefix,
                 },
