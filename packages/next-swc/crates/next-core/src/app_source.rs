@@ -1083,7 +1083,7 @@ import {}, {{ chunks as {} }} from "COMPONENT_{}";
                     Value::new(ReferenceType::Internal(InnerAssetsVc::cell(indexmap! {
                         "INNER_EDGE_CHUNK_GROUP".to_string() => context.with_transition("next-edge-page").process(
                             asset.into(),
-                                    Value::new(ReferenceType::Internal(InnerAssetsVc::cell(inner_assets))),
+                            Value::new(ReferenceType::Internal(InnerAssetsVc::cell(inner_assets))),
                         ),
                     }))),
                 )
