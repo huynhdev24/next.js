@@ -143,6 +143,7 @@ importers:
       npm-run-all: 4.1.5
       nprogress: 0.2.0
       open: 9.0.0
+      outdent: 0.8.0
       pixrem: 5.0.0
       playwright-chromium: 1.28.1
       plop: 3.0.5
@@ -328,6 +329,7 @@ importers:
       npm-run-all: 4.1.5
       nprogress: 0.2.0
       open: 9.0.0
+      outdent: 0.8.0
       pixrem: 5.0.0
       playwright-chromium: 1.28.1
       plop: 3.0.5
@@ -1014,8 +1016,8 @@ importers:
       '@types/react': 18.2.5
       '@types/react-dom': 18.2.3
       '@vercel/ncc': ^0.36.0
-      '@vercel/turbopack-ecmascript-runtime': https://gitpkg.vercel.app/vercel/turbo/crates/turbopack-ecmascript-runtime/js?turbopack-230601.4
-      '@vercel/turbopack-node': https://gitpkg.vercel.app/vercel/turbo/crates/turbopack-node/js?turbopack-230601.4
+      '@vercel/turbopack-ecmascript-runtime': file:../../../../../../turbo/crates/turbopack-ecmascript-runtime/js
+      '@vercel/turbopack-node': file:../../../../../../turbo/crates/turbopack-node/js
       anser: ^2.1.1
       css.escape: ^1.5.1
       find-up: ^6.3.0
@@ -1027,8 +1029,8 @@ importers:
       stacktrace-parser: ^0.1.10
       strip-ansi: ^7.0.1
     dependencies:
-      '@vercel/turbopack-ecmascript-runtime': '@gitpkg.vercel.app/vercel/turbo/crates/turbopack-ecmascript-runtime/js?turbopack-230601.4_react-refresh@0.12.0'
-      '@vercel/turbopack-node': '@gitpkg.vercel.app/vercel/turbo/crates/turbopack-node/js?turbopack-230601.4'
+      '@vercel/turbopack-ecmascript-runtime': file:../turbo/crates/turbopack-ecmascript-runtime/js_react-refresh@0.12.0
+      '@vercel/turbopack-node': file:../turbo/crates/turbopack-node/js
       anser: 2.1.1
       css.escape: 1.5.1
       next: link:../../../../next
@@ -6455,7 +6457,7 @@ packages:
       '@jest/schemas': 29.4.3
       '@types/istanbul-lib-coverage': 2.0.3
       '@types/istanbul-reports': 3.0.0
-      '@types/node': 18.11.18
+      '@types/node': 20.2.5
       '@types/yargs': 17.0.10
       chalk: 4.1.2
     dev: true
@@ -20358,6 +20360,10 @@ packages:
       os-tmpdir: 1.0.2
     dev: true
 
+  /outdent/0.8.0:
+    resolution: {integrity: sha512-KiOAIsdpUTcAXuykya5fnVVT+/5uS0Q1mrkRHcF89tpieSmY33O/tmc54CqwA+bfhbtEfZUNLHaPUiB9X3jt1A==}
+    dev: true
+
   /p-cancelable/0.3.0:
     resolution: {integrity: sha512-RVbZPLso8+jFeq1MfNvgXtCRED2raz/dKpacfTNxsx6pLEpEomM7gah6VeHSYV3+vo0OAi4MkArtQcWWXuQoyw==}
     engines: {node: '>=4'}
@@ -25415,7 +25421,7 @@ packages:
     hasBin: true
     dependencies:
       '@jridgewell/source-map': 0.3.2
-      acorn: 8.8.0
+      acorn: 8.8.2
       commander: 2.20.3
       source-map-support: 0.5.20
 
@@ -27241,9 +27247,9 @@ packages:
   /zwitch/2.0.4:
     resolution: {integrity: sha512-bXE4cR/kVZhKZX/RjPEflHaKVhUVl85noU3v6b8apfQEc1x4A+zBxjZ4lN8LqGd6WZ3dl98pY4o717VFmoPp+A==}
 
-  '@gitpkg.vercel.app/vercel/turbo/crates/turbopack-ecmascript-runtime/js?turbopack-230601.4_react-refresh@0.12.0':
-    resolution: {tarball: https://gitpkg.vercel.app/vercel/turbo/crates/turbopack-ecmascript-runtime/js?turbopack-230601.4}
-    id: '@gitpkg.vercel.app/vercel/turbo/crates/turbopack-ecmascript-runtime/js?turbopack-230601.4'
+  file:../turbo/crates/turbopack-ecmascript-runtime/js_react-refresh@0.12.0:
+    resolution: {directory: ../turbo/crates/turbopack-ecmascript-runtime/js, type: directory}
+    id: file:../turbo/crates/turbopack-ecmascript-runtime/js
     name: '@vercel/turbopack-ecmascript-runtime'
     version: 0.0.0
     dependencies:
@@ -27254,8 +27260,8 @@ packages:
       - webpack
     dev: false
 
-  '@gitpkg.vercel.app/vercel/turbo/crates/turbopack-node/js?turbopack-230601.4':
-    resolution: {tarball: https://gitpkg.vercel.app/vercel/turbo/crates/turbopack-node/js?turbopack-230601.4}
+  file:../turbo/crates/turbopack-node/js:
+    resolution: {directory: ../turbo/crates/turbopack-node/js, type: directory}
     name: '@vercel/turbopack-node'
     version: 0.0.0
     dependencies:
