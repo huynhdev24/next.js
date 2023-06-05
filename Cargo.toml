@@ -42,11 +42,11 @@ swc_core = { version = "0.76.41" }
 testing = { version = "0.33.13" }
 
 # Turbo crates
-turbopack-binding = { path = "../turbo/crates/turbopack-binding" } # last tag: "turbopack-230601.4"
+turbopack-binding = { git = "https://github.com/vercel/turbo.git", branch = "hrmny/web-1143-bubble-up-module-init-errors" }
 # [TODO]: need to refactor embed_directory! macro usages, as well as resolving turbo_tasks::function, macros..
-turbo-tasks = { path = "../turbo/crates/turbo-tasks" } # last tag: "turbopack-230601.4"
+turbo-tasks = { git = "https://github.com/vercel/turbo.git", branch = "hrmny/web-1143-bubble-up-module-init-errors" }
 # [TODO]: need to refactor embed_directory! macro usage in next-core
-turbo-tasks-fs = { path = "../turbo/crates/turbo-tasks-fs" } # last tag: "turbopack-230601.4"
+turbo-tasks-fs = { git = "https://github.com/vercel/turbo.git", branch = "hrmny/web-1143-bubble-up-module-init-errors" }
 
 # General Deps
 
